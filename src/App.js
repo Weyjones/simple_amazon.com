@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
+import './style/css/App.css';
 import logo from './kisspng-amazon-com-dinner-in-camelot-the-night-america-s-amazon-5acae7b10f8e97.7644296015232470250637.png';
+import SearchRes from './SearchRes';
 
 const cates = ["All", "Banana", "Orange", "Apple", "Mango"];
-
-
-class SearchRes extends Component {
-  render() {
-    return (
-      <div className="search_res">
-        
-      </div>
-    )
-  }
-}
-
+const PRODUCT_API = "https://n3az8lcyj2.execute-api.us-east-2.amazonaws.com/playground/getproducts";
 
 class SearchBar extends Component {
   render() {
@@ -44,10 +34,32 @@ class SearchBar extends Component {
 
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      products: []
+    }
+  }
+
+  componentDidMount() {
+    fetch(PRODUCT_API)
+      .then(res => res.json())
+      .then(
+        data => {
+          this.setState({
+            products: data
+          })
+        }
+      )
+      .catch(err => console.log(err))
+  }
+
   render() {
+    console.log(this.state.products)
     return (
       <div className="App">
         <SearchBar />
+        <SearchRes />
       </div>
     );
   }
