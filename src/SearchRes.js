@@ -3,8 +3,9 @@ import './SearchRes.css';
 
   class Item extends Component {
     render() {
+      let product = this.props.product;
       return (
-        <div className="item" key={this.props.key}>
+        <div className="item" >
           <div className="item_left">
             <div className="item_image">
                 <img src="http://via.placeholder.com/200x180" alt="item Img" />
@@ -12,14 +13,14 @@ import './SearchRes.css';
           </div>
           <div className="item_right">
             <div className="item_title"> 
-                <a href="#"><h2>This is a tmp title.</h2></a>
+                <a href="#"><h2>{product.Title}</h2></a>
             </div>
             <div className="item_seller">
-                <p>This is a tmp seller.</p>
+                <p>{"by " + product.Seller}</p>
             </div>
             <div className="item_info"> 
                 <div className="info_left">
-                    <div className="price">$10.32/Ounce</div>
+                    <div className="price">{"$" + product.Price}</div>
                 </div>
                 <div className="info_right">
                     <div className="stars">
@@ -30,8 +31,8 @@ import './SearchRes.css';
                         <i className="fa fa-star"></i>
                     </div>
                     <div>
-                        <h7>Product Description</h7>
-                        <p>... in which it operates. The Italian food tradition of superior quality and ...</p>
+                        <h4>Product Description</h4>
+                        <p>{product.Description}</p>
                     </div>
                 </div>
             </div>
@@ -43,10 +44,10 @@ import './SearchRes.css';
   
   class SearchRes extends Component {
     render() {
-      let items = [1,2,3,4,5,6,7,8];  
+      let items = this.props.products;  
       return (
         <div className="search_res">
-            {items.map((val,idx) => <Item key={idx}/>)}
+            {items.map((val,idx) => <Item key={idx} product={val}/>)}
         </div>
       )
     }
