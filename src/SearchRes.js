@@ -34,6 +34,14 @@ import './SearchRes.css';
                         <h4>Product Description</h4>
                         <p>{product.Description}</p>
                     </div>
+                    <div>
+                        {
+                            this.props.canAddCart ?
+                            <button onClick={() => this.props.editCart(product,true)}> Add to Cart </button> :
+                            <button disabled> In your Cart </button>
+                        }
+
+                    </div>
                 </div>
             </div>
           </div>
@@ -43,11 +51,24 @@ import './SearchRes.css';
   }
   
   class SearchRes extends Component {
+    
     render() {
-      let items = this.props.products;  
+      let items = this.props.products; 
+      let inCart = this.props.inCart
       return (
         <div className="search_res">
-            {items.map((val,idx) => <Item key={idx} product={val}/>)}
+          {
+            items.map((val,idx) => {
+                let foundInCart = inCart.filter(item => item.Title === val.Title)
+                console.log(foundInCart);
+                return (
+                    <Item key={idx} 
+                        product={val} 
+                        editCart={this.props.editCart}
+                        canAddCart={foundInCart.length === 0}/>
+                )
+            })
+          }
         </div>
       )
     }

@@ -10,9 +10,39 @@
     color: aliceblue;
     height: 60px;
     padding: 10px;
-    > i {
+      i {
         font-size: 33px;
       }
+      i:hover + .cart_content {
+        display: block;
+      }
+      .cart_content {
+        margin:  0 10px 10px 10px;
+        padding: 10px;
+        display: none;
+        width:350px;
+        background: white;
+        border: 2px solid black;
+        position: absolute;
+        right:0;
+        color: black;
+        
+        .cart_item {
+            display: flex;
+            justify-content: space-between;
+            p {
+                padding: 8px;
+            }
+            button {
+                height: 30px;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+        }
+    }
+     .cart_content:hover {
+         display: block;
+     }
   }
   
   
@@ -28,18 +58,21 @@
     width: 60px;
     
   }
-  
-  button {
-    width: 40px;
-    height: 30px;
-    border-radius: 0 5px 5px 0;
-    background: rgb(252, 183, 54);
-    border: 0;
+  .search_button {
+    button   {
+        width: 40px;
+        height: 30px;
+        border-radius: 0 5px 5px 0;
+        background: rgb(252, 183, 54);
+        border: 0;
+    }
+    button:hover {
+        background: rgb(211, 138, 3);
+      }
   }
+
   
-  button:hover {
-    background: rgb(211, 138, 3);
-  }
+  
   
   
   .input_box > input {

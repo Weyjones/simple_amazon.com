@@ -38,7 +38,46 @@ class SearchBar extends Component {
           </div>
         </div>
         <div className="cart">
-          <i className="fas fa-cart-plus"></i>
+          <Cart
+            inCart={["item1", "item2"]} 
+            editCart={this.props.editCart}
+            inCart={this.props.inCart}/>
+        </div>
+      </div>
+    )
+  }
+}
+
+class Cart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inCart: this.props.inCart
+    }
+  }
+
+  handleRemove = (val) => {
+    this.props.editCart(val, false);
+  } 
+
+  render() {
+    let inCart = this.props.inCart;
+    return (
+      <div>
+        <i className="fas fa-cart-plus"></i>
+        <div className="cart_content">
+          {
+            inCart.length === 0 
+              ? <p> {"Cart is Empty"} </p>
+              : inCart.map((val, idx) => {
+                return (
+                  <div key={idx} className="cart_item">
+                    <p> {val.Title} </p>
+                    <button onClick={() => this.handleRemove(val)}>Remove</button>
+                  </div>
+                )
+              })
+          }
         </div>
       </div>
     )
@@ -52,7 +91,8 @@ class App extends Component {
     this.state = {
       products: [],
       searchProducts: [],
-      noResult: false
+      noResult: false,
+      inCart: []
     }
     
   }
@@ -70,8 +110,19 @@ class App extends Component {
       .catch(err => console.log(err))
   }
 
+  editCart = (item, isAdd) => {
+    let inCarts = this.state.inCart;
+    if (isAdd) {
+      inCarts.push(item);
+    } else {
+      inCarts = inCarts.filter(product => product.Title != item.Title)
+    }
+    this.setState({
+      inCart: inCarts
+    })
+  }
+
   filterKeyword = (word) => {
-    
     let products = this.state.products;
     let searchResult = products.filter(product => {
       return product.Title.indexOf(word) > -1 || product.Description.indexOf(word) > -1;
@@ -94,10 +145,17 @@ class App extends Component {
     let display = this.state.searchProducts.length > 0 ? this.state.searchProducts : this.state.products;
     return (
       <div className="App">
-        <SearchBar allProducts={this.state.products} filterKeyword={this.filterKeyword}/>
+        <SearchBar 
+          allProducts={this.state.products} 
+          filterKeyword={this.filterKeyword} 
+          editCart={this.editCart}
+          inCart={this.state.inCart}/>
         {this.state.noResult ? 
           <h3>No Search Result</h3> :
-          <SearchRes products={display}/>
+          <SearchRes 
+            editCart={this.editCart} 
+            inCart={this.state.inCart} 
+            products={display}/>
         }
       </div>
     );
