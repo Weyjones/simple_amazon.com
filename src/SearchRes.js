@@ -38,7 +38,7 @@ import './SearchRes.css';
                         {
                             this.props.canAddCart ?
                             <button onClick={() => this.props.editCart(product,true)}> Add to Cart </button> :
-                            <button disabled> In your Cart </button>
+                            <button className="isInCart" disabled> In your Cart </button>
                         }
 
                     </div>

@@ -44,3 +44,7 @@
 .price {
     font-size: large;
 }
+
+.isInCart {
+    background: rgb(255, 175, 25)
+}
